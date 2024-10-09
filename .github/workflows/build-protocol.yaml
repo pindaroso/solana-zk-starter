@@ -35,6 +35,9 @@ jobs:
         curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
         echo "$HOME/.cargo/bin" >> $GITHUB_PATH
 
+    - name: Rust Version 0.74.0
+      run: rustup default 1.74.0   
+
     - name: Install Solana CLI
       run: |
         SOLANA_VERSION=v1.18.22
