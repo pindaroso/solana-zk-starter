@@ -5,8 +5,10 @@
   "private": true,
   "scripts": {
     "dev": "pnpm -F=app dev",
-    "build": "pnpm -F=app build",
-    "validator": "pnpm -F=app validator",
+    "build": "pnpm build:app && pnpm build:protocol",
+    "build:app": "pnpm -F=app build",
+    "build:protocol": "pnpm -F=protocol build",
+    "validator": "light validator",
     "ship": "bin/ship.sh"
   },
   "keywords": [],

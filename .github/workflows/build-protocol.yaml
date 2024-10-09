@@ -54,7 +54,7 @@ jobs:
       run: avm use 0.30.1
 
     - name: Build the program
-      run: pnpm -F=protocol build
+      run: pnpm build:protocol
 
     - name: Run tests
       run: pnpm -F=protocol test
