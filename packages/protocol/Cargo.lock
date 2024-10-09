@@ -774,6 +774,16 @@ dependencies = [
 ]
 
 [[package]]
+name = "benchmark"
+version = "0.1.0"
+dependencies = [
+ "anchor-lang",
+ "solana-program-test",
+ "solana-sdk",
+ "tokio",
+]
+
+[[package]]
 name = "bincode"
 version = "1.3.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"

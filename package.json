@@ -12,7 +12,8 @@
     "validator": "light test-validator",
     "deploy:protocol": "pnpm -F=protocol deploy:protocol",
     "sync": "bin/sync.sh",
-    "ship": "bin/ship.sh"
+    "ship": "bin/ship.sh",
+    "bench": "bin/bench.sh"
   },
   "keywords": [],
   "author": "",

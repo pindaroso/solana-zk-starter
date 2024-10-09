@@ -1,0 +1,29 @@
+[package]
+name = "benchmark"
+version = "0.1.0"
+description = "Created with Anchor"
+edition = "2021"
+
+[lib]
+crate-type = ["cdylib", "lib"]
+name = "benchmark"
+
+[features]
+no-entrypoint = []
+no-idl = []
+no-log-ix-name = []
+cpi = ["no-entrypoint"]
+default = ["idl-build"]
+test-sbf = []
+bench-sbf = []
+idl-build = ["anchor-lang/idl-build"]
+
+[dependencies]
+anchor-lang = "0.29.0"
+
+[target.'cfg(not(target_os = "solana"))'.dependencies]
+solana-sdk = "1.18.22"
+
+[dev-dependencies]
+solana-program-test = "1.18.22"
+tokio = "1.36.0"
