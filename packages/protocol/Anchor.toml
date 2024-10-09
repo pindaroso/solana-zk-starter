@@ -5,6 +5,7 @@ solana_version = "1.18.22"
 [features]
 resolution = true
 skip-lint = false
+idl = true
 
 [programs.localnet]
 protocol = "Fg6PaFpoGXkYsidMpWTK6W2BeZ7FEfcYkg476zPFsLnS"
@@ -16,3 +17,5 @@ url = "https://api.apr.dev"
 cluster = "Localnet"
 wallet = "~/.config/solana/id.json"
 
+[test]
+test = "cargo test-sbf"
