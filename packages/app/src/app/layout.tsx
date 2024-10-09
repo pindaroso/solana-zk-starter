@@ -1,10 +1,8 @@
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 
-// Default styles that can be overridden by your app
-require('@solana/wallet-adapter-react-ui/styles.css')
-
-import './globals.css'
+import '@solana/wallet-adapter-react-ui/styles.css'
+import '@/app/globals.css'
 
 const inter = Inter({ subsets: ['latin'] })
 

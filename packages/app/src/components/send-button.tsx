@@ -2,10 +2,8 @@ import { useWallet } from '@solana/wallet-adapter-react'
 import { FC, useCallback } from 'react'
 import {
   LightSystemProgram,
-  Rpc,
   bn,
   buildTx,
-  confirmTx,
   createRpc,
   defaultTestStateTreeAccounts,
   selectMinCompressedSolAccountsForTransfer,
@@ -24,13 +22,9 @@ export const SendButton: FC = () => {
   const { publicKey, sendTransaction } = useWallet()
 
   const onClick = useCallback(async () => {
-    /// Get connection with compatibility to Compression API
-    const connection: Rpc = createRpc()
-
     if (!publicKey) throw new WalletNotConnectedError()
 
-    /// airdrop
-    await confirmTx(connection, await connection.requestAirdrop(publicKey, 1e9))
+    const connection = createRpc()
 
     /// compress to self
     const compressInstruction = await LightSystemProgram.compress({
@@ -79,6 +73,7 @@ export const SendButton: FC = () => {
     )
 
     console.log('selectedAccounts', selectedAccounts)
+
     /// 2. Retrieve validity proof for our selected balance
     const { compressedProof, rootIndices } = await connection.getValidityProof(
       selectedAccounts.map((account) => bn(account.hash))
@@ -132,7 +127,7 @@ export const SendButton: FC = () => {
 
   return (
     <Button onClick={onClick} disabled={!publicKey}>
-      Get airdrop, compress and send SOL to a random address!
+      Send Compressed SOL
     </Button>
   )
 }
