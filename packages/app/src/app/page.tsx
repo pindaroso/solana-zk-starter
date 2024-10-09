@@ -6,6 +6,7 @@ import { useWalletModal } from '@solana/wallet-adapter-react-ui'
 import { Connection } from '@solana/web3.js'
 import { LAMPORTS_PER_SOL } from '@solana/web3.js'
 import { useTheme } from 'next-themes'
+import { Sun, Moon } from 'lucide-react'
 
 import { SendButton } from '@/components/send-button'
 import { AirdropButton } from '@/components/airdrop-button'
@@ -51,7 +52,7 @@ export default function Home() {
           <div className="flex items-center gap-2">
             {publicKey ? (
               <div className="flex flex-row">
-                <Button variant="link">
+                <Button variant="link" className="">
                   {balance !== null ? balance.toFixed(2) : 'Loading...'} SOL
                 </Button>
                 <Button
@@ -61,8 +62,10 @@ export default function Home() {
                     disconnect()
                   }}
                 >
-                  {publicKey.toBase58().slice(0, 4)}...
-                  {publicKey.toBase58().slice(-4)}
+                  <code>
+                    {publicKey.toBase58().slice(0, 4)}...
+                    {publicKey.toBase58().slice(-4)}
+                  </code>
                 </Button>
               </div>
             ) : (
@@ -77,12 +80,17 @@ export default function Home() {
               </Button>
             )}
             <div
+              className="cursor-pointer ml-2"
               onClick={() => {
                 console.log(theme)
                 setTheme(theme === 'dark' ? 'light' : 'dark')
               }}
             >
-              {theme === 'dark' ? 'Light Mode' : 'Dark Mode'}
+              {theme === 'dark' ? (
+                <Sun className="w-4 h-4" />
+              ) : (
+                <Moon className="w-4 h-4" />
+              )}
             </div>
           </div>
         </div>
@@ -98,8 +106,8 @@ export default function Home() {
       </main>
 
       <footer className="p-4">
-        <div className="container mx-auto text-center text-green-500">
-          {blockNumber !== null ? blockNumber : 'Loading...'}
+        <div className="container mx-auto text-center text-sm text-green-500">
+          <code>{blockNumber !== null ? blockNumber : 'Loading...'}</code>
         </div>
       </footer>
     </div>
