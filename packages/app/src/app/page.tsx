@@ -34,17 +34,21 @@ export default function Home() {
           <h1 className="text-primary text-lg">Solana ZK Starter App</h1>
           <div className="flex items-center gap-2">
             {publicKey ? (
-              <Button
-                onClick={(e) => {
-                  e.preventDefault()
-                  disconnect()
-                }}
-              >
-                {publicKey.toBase58().slice(0, 4)}...
-                {publicKey.toBase58().slice(-4)}
-              </Button>
+              <div>
+                <Button
+                  variant="outline"
+                  onClick={(e) => {
+                    e.preventDefault()
+                    disconnect()
+                  }}
+                >
+                  {publicKey.toBase58().slice(0, 4)}...
+                  {publicKey.toBase58().slice(-4)}
+                </Button>
+              </div>
             ) : (
               <Button
+                variant="outline"
                 onClick={(e) => {
                   e.preventDefault()
                   setVisible(true)
@@ -57,9 +61,13 @@ export default function Home() {
         </div>
       </nav>
 
-      <main className="flex-grow container mx-auto p-4">
-        <AirdropButton />
-        <SendButton />
+      <main className="flex-grow mx-auto p-4">
+        <div className="flex flex-col gap-2">
+          <AirdropButton />
+        </div>
+        <div className="flex flex-col gap-2 mt-2">
+          <SendButton />
+        </div>
       </main>
 
       <footer className="p-4">
