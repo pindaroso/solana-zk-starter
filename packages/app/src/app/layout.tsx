@@ -9,8 +9,8 @@ import { WalletContextProvider } from '@/components/providers/wallet'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'Solana ZK Starter',
-  description: 'Solana ZK Starter',
+  title: 'Solana ZK Starter App',
+  description: 'Solana ZK Starter App',
 }
 
 export default function RootLayout({

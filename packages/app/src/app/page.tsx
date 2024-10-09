@@ -63,8 +63,8 @@ export default function Home() {
       </main>
 
       <footer className="p-4">
-        <div className="container mx-auto text-center text-muted-foreground">
-          Block Number: {blockNumber !== null ? blockNumber : 'Loading...'}
+        <div className="container mx-auto text-center text-green-500">
+          {blockNumber !== null ? blockNumber : 'Loading...'}
         </div>
       </footer>
     </div>
