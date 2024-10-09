@@ -1,18 +1,19 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-    webpack: (config, { isServer }) => {
-        // Fix for Node.js modules in Webpack 5+
-        if (!isServer) {
-            config.resolve.fallback = {
-                ...config.resolve.fallback,
-                fs: false,
-                path: false,
-                os: false,
-            };
-        }
+  webpack: (config, { isServer }) => {
+    config.externals.push('pino-pretty', 'lokijs', 'encoding')
+    // Fix for Node.js modules in Webpack 5+
+    if (!isServer) {
+      config.resolve.fallback = {
+        ...config.resolve.fallback,
+        fs: false,
+        path: false,
+        os: false,
+      }
+    }
 
-        return config;
-    },
-};
+    return config
+  },
+}
 
-export default nextConfig;
+export default nextConfig
