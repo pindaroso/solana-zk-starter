@@ -1,4 +1,4 @@
-[![Build](https://github.com/pindaroso/solana-zk-starter/actions/workflows/build-app.yaml/badge.svg)](https://github.com/pindaroso/solana-zk-starter/actions/workflows/build-app.yaml)
+[![Build](https://github.com/pindaroso/solana-zk-starter/actions/workflows/build.yaml/badge.svg)](https://github.com/pindaroso/solana-zk-starter/actions/workflows/build.yaml)
 
 # Solana ZK Starter
 
