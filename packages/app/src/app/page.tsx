@@ -1,8 +1,9 @@
 'use client'
 
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { useWallet } from '@solana/wallet-adapter-react'
 import { useWalletModal } from '@solana/wallet-adapter-react-ui'
+import { Connection } from '@solana/web3.js'
 
 import { SendButton } from '@/components/send-button'
 import { AirdropButton } from '@/components/airdrop-button'
@@ -12,10 +13,24 @@ import { Button } from '@/components/ui/button'
 export default function Home() {
   const { publicKey, disconnect } = useWallet()
   const { setVisible } = useWalletModal()
+  const [blockNumber, setBlockNumber] = useState<number | null>(null)
+
+  useEffect(() => {
+    const conn = new Connection('http://127.0.0.1:8899', 'confirmed')
+
+    const subscriptionId = conn.onSlotChange((slotInfo) => {
+      setBlockNumber(slotInfo.slot)
+    })
+
+    return () => {
+      conn.removeSlotChangeListener(subscriptionId)
+    }
+  }, [])
+
   return (
     <div className="flex flex-col min-h-screen">
       <nav className="p-4">
-        <div className="container mx-auto flex justify-between items-center">
+        <div className="flex justify-between items-center">
           <h1 className="text-primary text-lg">Solana ZK Starter App</h1>
           <div className="flex items-center gap-2">
             {publicKey ? (
@@ -49,7 +64,7 @@ export default function Home() {
 
       <footer className="p-4">
         <div className="container mx-auto text-center text-muted-foreground">
-          Block Number
+          Block Number: {blockNumber !== null ? blockNumber : 'Loading...'}
         </div>
       </footer>
     </div>
