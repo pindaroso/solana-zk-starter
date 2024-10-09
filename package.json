@@ -2,7 +2,7 @@
   "name": "solana-zk-starter",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "private": true,
   "scripts": {
     "dev": "pnpm -F=app dev",
     "build": "pnpm -F=app build",

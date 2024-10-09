@@ -1,0 +1,5 @@
+[workspace]
+members = [
+  "packages/protocol/programs/*",
+]
+resolver = "2"

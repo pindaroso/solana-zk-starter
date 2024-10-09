@@ -1,8 +1,12 @@
 {
+  "name": "protocol",
+  "version": "0.1.0",
+  "private": true,
   "scripts": {
     "lint:fix": "prettier \"*/**/*{.js,.ts}\" -w",
     "lint": "prettier  \"*/**/*{.js,.ts}\" --check",
-    "test": "cargo test-sbf -p token-escrow -- --test-threads=1"
+    "test": "cargo test-sbf -p token-escrow -- --test-threads=1",
+    "build": "anchor build"
   },
   "dependencies": {
     "@coral-xyz/anchor": "0.29.0"

@@ -1,3 +1,5 @@
+[![Build](https://github.com/pindaroso/solana-zk-starter/actions/workflows/build.yaml/badge.svg)](https://github.com/pindaroso/solana-zk-starter/actions/workflows/build.yaml)
+
 # Solana ZK Starter
 
 This project is a starter for building and deploying Solana [ZK](https://www.zkcompression.com/) compression apps using [Light Protocol](https://github.com/Lightprotocol/light-protocol) and [Helius Photon](https://github.com/helius-labs/photon).

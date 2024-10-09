@@ -14,7 +14,7 @@ token_escrow = "GRLu2hKaAiMbxpkAM1HeXzks9YeGuz18SEgXEizVvPqX"
 url = "https://api.apr.dev"
 
 [provider]
-cluster = "testnet"
+cluster = "localnet"
 wallet = "$HOME/.config/solana/id.json"
 
 [scripts]
