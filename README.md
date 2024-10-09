@@ -1,5 +1,7 @@
 # Solana ZK Starter
 
+This project is a starter for building and deploying Solana [ZK](https://www.zkcompression.com/) compression apps using [Light Protocol](https://github.com/Lightprotocol/light-protocol) and [Helius Photon](https://github.com/helius-labs/photon).
+
 **Requirements**
 
 - [Docker v4.32.2](https://docs.docker.com/engine/install/)
