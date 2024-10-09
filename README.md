@@ -8,10 +8,10 @@ This project is a starter for building and deploying Solana [ZK](https://www.zkc
 
 - [Docker v4.32.2](https://docs.docker.com/engine/install/)
 - [Node v18.20.0](https://github.com/nvm-sh/nvm)
-- [Anchor CLI v0.30.1](https://github.com/project-serum/anchor/releases/tag/v0.30.1)
-- [pnpm v9.0.0](https://pnpm.io/installation)
+- [pnpm v7.0.0](https://pnpm.io/installation)
 - [Solana CLI v1.18.22](https://docs.solanalabs.com/cli/install)
-- [Solana Verify CLI](https://github.com/Ellipsis-Labs/solana-verifiable-build)
+- [Anchor CLI v0.30.1](https://github.com/project-serum/anchor/releases/tag/v0.30.1)
+- [Solana Verify CLI v0.2.11](https://github.com/Ellipsis-Labs/solana-verifiable-build)
 - [Rust v1.74.0](https://www.rust-lang.org/tools/install)
 - [Light Protocol CLI v1.2.0](https://github.com/Lightprotocol/light-protocol/tree/main/cli#readme)
 - [Photon Indexer v0.45.0](https://github.com/helius-labs/photon)
