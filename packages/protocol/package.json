@@ -1,13 +1,8 @@
 {
-  "name": "protocol",
-  "version": "0.1.0",
-  "private": true,
   "license": "ISC",  
   "scripts": {
     "lint:fix": "prettier */*.js \"*/**/*{.js,.ts}\" -w",
-    "lint": "prettier */*.js \"*/**/*{.js,.ts}\" --check",
-    "build": "anchor build",
-    "test": "cargo test-sbf"
+    "lint": "prettier */*.js \"*/**/*{.js,.ts}\" --check"
   },
   "dependencies": {
     "@coral-xyz/anchor": "^0.30.1"
