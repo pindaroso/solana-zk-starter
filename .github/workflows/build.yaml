@@ -1,4 +1,4 @@
-name: Build Protocol
+name: Build
 
 on:
   push:
@@ -25,10 +25,13 @@ jobs:
     - name: Set up Node.js
       uses: actions/setup-node@v3
       with:
-        node-version: '20'
+        node-version: '18'
 
     - name: Install dependencies
       run: pnpm install --no-frozen-lockfile
+
+    - name: Build Next.js app
+      run: pnpm run build:app
 
     - name: Setup Rust
       run: |
@@ -58,3 +61,4 @@ jobs:
 
     - name: Run tests
       run: pnpm -F=protocol test
+
