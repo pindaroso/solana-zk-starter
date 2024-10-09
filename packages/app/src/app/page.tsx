@@ -13,6 +13,7 @@ import {
 } from '@solana/wallet-adapter-react-ui'
 
 import { SendButton } from '@/components/send-button'
+import { AirdropButton } from '@/components/airdrop-button'
 
 export default function Home() {
   /// Testnet:
@@ -27,6 +28,7 @@ export default function Home() {
           <WalletMultiButton />
           <WalletDisconnectButton />
           <div>Solana ZK Starter</div>
+          <AirdropButton />
           <SendButton />
         </WalletModalProvider>
       </WalletProvider>
