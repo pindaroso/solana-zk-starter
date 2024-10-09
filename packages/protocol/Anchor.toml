@@ -5,11 +5,11 @@ resolution = true
 skip-lint = false
 
 [programs.localnet]
-protocol = "Fg6PaFpoGXkYsidMpWTK6W2BeZ7FEfcYkg476zPFsLnS"
+protocol = "269WdsAWfRPf1qB4LVM5Zs11CtwfnvcCF91v8NKd4rck"
 
 [registry]
 url = "https://api.apr.dev"
 
 [provider]
-cluster = "Localnet"
+cluster = "localnet"
 wallet = "~/.config/solana/id.json"

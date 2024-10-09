@@ -22,22 +22,28 @@ This project is a starter for building and deploying Solana [ZK](https://www.zkc
 pnpm install
 ```
 
-**Build the program**
+**Build the app and protocol**
 
 ```bash
 pnpm build
 ```
 
-**Run the validator**
+**Run the light validator**
 
 ```bash
 pnpm validator
 ```
 
-**Deploy**
+**Deploy the protocol**
 
 ```bash
-pnpm deploy
+pnpm deploy:protocol
+```
+
+**Sync the app IDL**
+
+```bash
+pnpm sync
 ```
 
 **Run the app**

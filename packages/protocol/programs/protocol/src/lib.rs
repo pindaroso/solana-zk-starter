@@ -4,7 +4,7 @@ use light_sdk::{
     merkle_context::PackedAddressMerkleContext,
 };
 
-declare_id!("Fg6PaFpoGXkYsidMpWTK6W2BeZ7FEfcYkg476zPFsLnS");
+declare_id!("269WdsAWfRPf1qB4LVM5Zs11CtwfnvcCF91v8NKd4rck");
 
 #[light_program]
 #[program]

@@ -4,11 +4,14 @@
   "description": "",
   "private": true,
   "scripts": {
-    "dev": "pnpm -F=app dev",
     "build": "pnpm build:app && pnpm build:protocol",
     "build:app": "pnpm -F=app build",
     "build:protocol": "pnpm -F=protocol build",
-    "validator": "light validator",
+    "test": "pnpm -F=protocol test",
+    "dev": "pnpm -F=app dev",
+    "validator": "light test-validator",
+    "deploy:protocol": "pnpm -F=protocol deploy:protocol",
+    "sync": "bin/sync.sh",
     "ship": "bin/ship.sh"
   },
   "keywords": [],
