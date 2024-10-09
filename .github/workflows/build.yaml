@@ -1,0 +1,20 @@
+name: Build Next.js App
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Install dependencies
+      run: pnpm install
+
+    - name: Build Next.js app
+      run: pnpm run build
