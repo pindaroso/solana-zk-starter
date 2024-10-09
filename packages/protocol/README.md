@@ -1,26 +1,27 @@
-# Token Escrow program example
+# Compressed Program Template
 
-This example program escrows compressed tokens into (1) a regular Solana program account and (2) a compressed-pda account.
+This template initializes a counter program with instructions to create a compressed account, increment the accounts counter field and delete the account.
 
-**Note:** Breaking changes to interfaces can occur. To ensure compatibility with the latest release, please check out the [latest release branch](https://github.com/Lightprotocol/light-protocol/tree/light-v0.3.0/examples/token-escrow).
+## Build
 
-### Run the tests
+``
+$ anchor build
+``
 
-In the monorepo root, run the build.sh script
+## Test
 
-```bash
-    source ./scripts/devenv.sh
-    ./scripts/build.sh
-    mkdir -p ./target/deploy
-    cp ./third-party/solana-program-library/spl_noop.so ./target/deploy/spl_noop.so
-    anchor build
-```
+Requirements:
+- light cli 
 
-Then navigate to the token-escrow directory and run the rust tests:
+``
+$ cargo test-sbf
+``
 
-```bash
-cd examples/token-escrow/programs/token-escrow
-cargo test-sbf -- --test-threads=1
-```
+The test spawns a prover server in the background.
+In case of a connection refused error on port 3001 try to kill the prover server with `lsof -i:3001` and `kill <pid>`.
 
-## This program is unsafe; don't use it in production.
+
+## Disclaimer
+
+Programs are audited and deployed on Solana devnet and mainnet.
+The light rust macros are experimental and api will change.

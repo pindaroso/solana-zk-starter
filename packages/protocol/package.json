@@ -2,23 +2,24 @@
   "name": "protocol",
   "version": "0.1.0",
   "private": true,
+  "license": "ISC",  
   "scripts": {
-    "lint:fix": "prettier \"*/**/*{.js,.ts}\" -w",
-    "lint": "prettier  \"*/**/*{.js,.ts}\" --check",
-    "test": "cargo test-sbf -p token-escrow -- --test-threads=1",
-    "build": "anchor build"
+    "lint:fix": "prettier */*.js \"*/**/*{.js,.ts}\" -w",
+    "lint": "prettier */*.js \"*/**/*{.js,.ts}\" --check",
+    "build": "anchor build",
+    "test": "cargo test-sbf"
   },
   "dependencies": {
-    "@coral-xyz/anchor": "0.29.0"
+    "@coral-xyz/anchor": "^0.30.1"
   },
   "devDependencies": {
-    "chai": "^5.1.1",
-    "mocha": "^10.7.3",
+    "chai": "^4.3.4",
+    "mocha": "^9.0.3",
     "ts-mocha": "^10.0.0",
-    "@types/bn.js": "^5.1.5",
-    "@types/chai": "^4.3.17",
-    "@types/mocha": "^10.0.7",
-    "typescript": "^5.5.4",
-    "prettier": "^3.3.3"
+    "@types/bn.js": "^5.1.0",
+    "@types/chai": "^4.3.0",
+    "@types/mocha": "^9.0.0",
+    "typescript": "^4.3.5",
+    "prettier": "^2.6.2"
   }
 }
