@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
+import { ThemeProvider } from 'next-themes'
 
 import '@solana/wallet-adapter-react-ui/styles.css'
 import '@/app/globals.css'
@@ -21,7 +22,15 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <WalletContextProvider>{children}</WalletContextProvider>
+        <WalletContextProvider>
+          <ThemeProvider
+            attribute="class"
+            themes={['light', 'dark']}
+            defaultTheme="system"
+          >
+            {children}
+          </ThemeProvider>
+        </WalletContextProvider>
       </body>
     </html>
   )

@@ -5,6 +5,7 @@ import { useWallet } from '@solana/wallet-adapter-react'
 import { useWalletModal } from '@solana/wallet-adapter-react-ui'
 import { Connection } from '@solana/web3.js'
 import { LAMPORTS_PER_SOL } from '@solana/web3.js'
+import { useTheme } from 'next-themes'
 
 import { SendButton } from '@/components/send-button'
 import { AirdropButton } from '@/components/airdrop-button'
@@ -14,6 +15,8 @@ import { Button } from '@/components/ui/button'
 export default function Home() {
   const { publicKey, disconnect } = useWallet()
   const { setVisible } = useWalletModal()
+  const { setTheme, theme } = useTheme()
+
   const [blockNumber, setBlockNumber] = useState<number | null>(null)
   const [balance, setBalance] = useState<number | null>(null) // Add state for balance
 
@@ -47,7 +50,7 @@ export default function Home() {
           <h1 className="text-primary text-lg">Solana ZK Starter App</h1>
           <div className="flex items-center gap-2">
             {publicKey ? (
-              <div className="flex flex-row gap-1">
+              <div className="flex flex-row">
                 <Button variant="link">
                   {balance !== null ? balance.toFixed(2) : 'Loading...'} SOL
                 </Button>
@@ -73,6 +76,14 @@ export default function Home() {
                 Select Wallet
               </Button>
             )}
+            <div
+              onClick={() => {
+                console.log(theme)
+                setTheme(theme === 'dark' ? 'light' : 'dark')
+              }}
+            >
+              {theme === 'dark' ? 'Light Mode' : 'Dark Mode'}
+            </div>
           </div>
         </div>
       </nav>
