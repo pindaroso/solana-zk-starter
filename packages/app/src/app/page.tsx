@@ -42,8 +42,16 @@ export default function Home() {
 
   const [blockNumber, setBlockNumber] = useState<number | null>(null)
   const [balance, setBalance] = useState<number | null>(null)
-  const [network, setNetwork] = useState<string>(defaultNetwork)
-  const [networkActive, setNetworkActive] = useState<boolean>(false)
+  const [network, setNetwork] = useState(defaultNetwork)
+  const [networkActive, setNetworkActive] = useState(false)
+  const [walletConnected, setWalletConnected] = useState(false)
+
+  useEffect(() => {
+    if (publicKey && !walletConnected) {
+      setWalletConnected(true)
+      toast.success('Wallet connected')
+    }
+  }, [publicKey])
 
   useEffect(() => {
     const conn = new Connection(endpoint, 'confirmed')
@@ -135,6 +143,7 @@ export default function Home() {
                         onClick={(e) => {
                           e.preventDefault()
                           disconnect()
+                          setWalletConnected(false)
                           setBalance(null)
                         }}
                       >

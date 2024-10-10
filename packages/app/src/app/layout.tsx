@@ -33,7 +33,7 @@ export default function RootLayout({
             {children}
             <Toaster
               toastOptions={{
-                className: 'bg-secondary text-primary',
+                className: 'dark:bg-secondary bg-secondary dark:text-primary',
                 position: 'bottom-left',
                 duration: 10_000,
                 style: {

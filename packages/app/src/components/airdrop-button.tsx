@@ -9,7 +9,6 @@ import { Button } from '@/components/ui/button'
 
 export const AirdropButton: FC = () => {
   const { publicKey } = useWallet()
-
   const { endpoint } = useWalletContext()
 
   const onClick = useCallback(async () => {
