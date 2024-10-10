@@ -97,6 +97,7 @@ export default function Home() {
                         onClick={(e) => {
                           e.preventDefault()
                           disconnect()
+                          setBalance(null)
                         }}
                       >
                         <code>
@@ -128,7 +129,6 @@ export default function Home() {
                   <div
                     className="cursor-pointer ml-2"
                     onClick={() => {
-                      console.log(theme)
                       setTheme(theme === 'dark' ? 'light' : 'dark')
                     }}
                   >
@@ -147,23 +147,23 @@ export default function Home() {
           </div>
         </div>
       </nav>
-      <main className="flex-grow mx-auto p-4">
-        <div className="flex flex-col gap-2">
+      <main className="flex-grow mx-auto p-4 gap-2">
+        <div className="flex flex-col">
           <div className="container">
             Wallet Balance:{' '}
-            {balance !== null ? balance.toFixed(2) + ' SOL' : 'Loading...'}
+            {balance !== null ? balance.toFixed(2) + ' SOL' : '-'}
           </div>
         </div>
-        <div className="flex flex-col gap-2 mt-2">
+        <div className="flex flex-col mt-2">
           <AirdropButton />
         </div>
-        <div className="flex flex-col gap-2 mt-2">
+        <div className="flex flex-col mt-2">
           <SendButton />
         </div>
       </main>
       <footer className="p-4">
         <div className="container mx-auto text-center text-sm text-green-500">
-          <code>{blockNumber !== null ? blockNumber : 'Loading...'}</code>
+          <code>{blockNumber !== null ? blockNumber : '-'}</code>
         </div>
       </footer>
     </div>
