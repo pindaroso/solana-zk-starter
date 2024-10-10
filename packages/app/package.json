@@ -35,9 +35,6 @@
     "tailwind-merge": "^2.5.3",
     "tailwindcss-animate": "^1.0.7"
   },
-  "resolutions": {
-    "string-width": "^4.2.0"
-  },
   "devDependencies": {
     "@types/node": "^20",
     "@types/react": "^18",
