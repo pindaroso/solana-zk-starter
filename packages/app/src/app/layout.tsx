@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import { ThemeProvider } from 'next-themes'
+import { Toaster } from 'react-hot-toast'
 
 import '@solana/wallet-adapter-react-ui/styles.css'
 import '@/app/globals.css'
@@ -24,12 +25,22 @@ export default function RootLayout({
       <body className={inter.className}>
         <WalletContextProvider>
           <ThemeProvider
-            attribute="class"
             enableSystem
             disableTransitionOnChange
+            attribute="class"
             defaultTheme="system"
           >
             {children}
+            <Toaster
+              toastOptions={{
+                className: 'bg-secondary text-primary',
+                position: 'bottom-left',
+                duration: 10_000,
+                style: {
+                  maxWidth: 2_000,
+                },
+              }}
+            />
           </ThemeProvider>
         </WalletContextProvider>
       </body>

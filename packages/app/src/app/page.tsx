@@ -7,6 +7,7 @@ import { Connection } from '@solana/web3.js'
 import { LAMPORTS_PER_SOL } from '@solana/web3.js'
 import { useTheme } from 'next-themes'
 import { Sun, Moon } from 'lucide-react'
+import toast from 'react-hot-toast'
 
 import { SendButton } from '@/components/send-button'
 import { AirdropButton } from '@/components/airdrop-button'
@@ -49,8 +50,13 @@ export default function Home() {
 
     const fetchBalance = async () => {
       if (publicKey) {
-        const balance = await conn.getBalance(publicKey)
-        setBalance(balance / LAMPORTS_PER_SOL) // Convert lamports to SOL
+        try {
+          const balance = await conn.getBalance(publicKey)
+          setBalance(balance / LAMPORTS_PER_SOL) // Convert lamports to SOL
+        } catch (error) {
+          console.error(error)
+          toast.error('Network error')
+        }
       }
     }
 
