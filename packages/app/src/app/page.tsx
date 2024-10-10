@@ -10,6 +10,12 @@ import { Sun, Moon } from 'lucide-react'
 
 import { SendButton } from '@/components/send-button'
 import { AirdropButton } from '@/components/airdrop-button'
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from '@/components/ui/tooltip'
 
 import { Button } from '@/components/ui/button'
 
@@ -48,25 +54,34 @@ export default function Home() {
     <div className="flex flex-col min-h-screen">
       <nav className="p-4">
         <div className="flex justify-between items-center">
-          <h1 className="text-primary text-lg">Solana ZK Starter App</h1>
+          <h1 className="text-primary text-lg">Solana ZK Starter</h1>
           <div className="flex items-center gap-2">
             {publicKey ? (
               <div className="flex flex-row">
                 <Button variant="link" className="">
                   {balance !== null ? balance.toFixed(2) : 'Loading...'} SOL
                 </Button>
-                <Button
-                  variant="outline"
-                  onClick={(e) => {
-                    e.preventDefault()
-                    disconnect()
-                  }}
-                >
-                  <code>
-                    {publicKey.toBase58().slice(0, 4)}...
-                    {publicKey.toBase58().slice(-4)}
-                  </code>
-                </Button>
+                <TooltipProvider>
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <Button
+                        variant="link"
+                        onClick={(e) => {
+                          e.preventDefault()
+                          disconnect()
+                        }}
+                      >
+                        <code>
+                          {publicKey.toBase58().slice(0, 4)}...
+                          {publicKey.toBase58().slice(-4)}
+                        </code>
+                      </Button>
+                    </TooltipTrigger>
+                    <TooltipContent>
+                      <p>Disconnect Wallet</p>
+                    </TooltipContent>
+                  </Tooltip>
+                </TooltipProvider>
               </div>
             ) : (
               <Button
@@ -76,7 +91,7 @@ export default function Home() {
                   setVisible(true)
                 }}
               >
-                Select Wallet
+                Connect Wallet
               </Button>
             )}
             <div

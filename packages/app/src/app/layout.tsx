@@ -10,8 +10,8 @@ import { WalletContextProvider } from '@/components/providers/wallet'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'Solana ZK Starter App',
-  description: 'Solana ZK Starter App',
+  title: 'Solana ZK Starter',
+  description: 'Solana ZK Starter',
 }
 
 export default function RootLayout({
@@ -22,15 +22,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <WalletContextProvider>
-          <ThemeProvider
-            attribute="class"
-            themes={['light', 'dark']}
-            defaultTheme="system"
-          >
-            {children}
-          </ThemeProvider>
-        </WalletContextProvider>
+        <ThemeProvider themes={['light', 'dark']} defaultTheme="system">
+          <WalletContextProvider>{children}</WalletContextProvider>
+        </ThemeProvider>
       </body>
     </html>
   )
