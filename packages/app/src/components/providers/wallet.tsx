@@ -19,15 +19,20 @@ import {
 } from '@solana/wallet-adapter-wallets'
 import { WalletModalProvider } from '@solana/wallet-adapter-react-ui'
 
+const defaultEndpoint =
+  process.env.NODE_ENV === 'development'
+    ? 'http://127.0.0.1:8899'
+    : 'https://api.devnet.solana.com'
+
 const WalletContext = createContext({
-  endpoint: 'http://127.0.0.1:8899',
+  endpoint: defaultEndpoint,
   setEndpoint: (endpoint: string) => {},
 })
 
 export const WalletContextProvider: FC<{ children: ReactNode }> = ({
   children,
 }) => {
-  const [endpoint, setEndpoint] = useState('http://127.0.0.1:8899')
+  const [endpoint, setEndpoint] = useState(defaultEndpoint)
 
   const value = {
     endpoint,

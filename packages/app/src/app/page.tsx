@@ -29,6 +29,9 @@ import { Button } from '@/components/ui/button'
 import { useWalletContext } from '@/components/providers/wallet'
 import { formatAddress } from '@/lib/utils'
 
+const defaultNetwork =
+  process.env.NODE_ENV === 'development' ? 'localnet' : 'devnet'
+
 export default function Home() {
   const { publicKey, disconnect } = useWallet()
   const { setVisible } = useWalletModal()
@@ -38,10 +41,11 @@ export default function Home() {
 
   const [blockNumber, setBlockNumber] = useState<number | null>(null)
   const [balance, setBalance] = useState<number | null>(null)
-  const [network, setNetwork] = useState<string>('localnet')
+  const [network, setNetwork] = useState<string>(defaultNetwork)
+  const [networkActive, setNetworkActive] = useState<boolean>(false)
 
   useEffect(() => {
-    const conn = new Connection(endpoint, 'confirmed') // Use network state
+    const conn = new Connection(endpoint, 'confirmed')
 
     const fetchBalance = async () => {
       if (publicKey) {
@@ -50,9 +54,10 @@ export default function Home() {
       }
     }
 
-    fetchBalance() // Fetch balance on component mount
+    fetchBalance()
 
     const subscriptionId = conn.onSlotChange(async (slotInfo) => {
+      setNetworkActive(true)
       const block = await conn.getBlockTime(slotInfo.slot)
       setBlockNumber(block)
       await fetchBalance() // Update balance on slot change
@@ -61,7 +66,7 @@ export default function Home() {
     return () => {
       conn.removeSlotChangeListener(subscriptionId)
     }
-  }, [publicKey, endpoint]) // Re-run effect when publicKey or endpoint changes
+  }, [publicKey, endpoint]) // Run effect when publicKey or endpoint changes
 
   return (
     <div className="flex flex-col min-h-screen">
@@ -74,7 +79,11 @@ export default function Home() {
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
                     <Button variant="outline" className="w-24">
-                      <span className="text-green-400 mr-2">&bull;</span>
+                      {networkActive ? (
+                        <span className="text-green-400 mr-2">&bull;</span>
+                      ) : (
+                        <span className="text-red-400 mr-2">&bull;</span>
+                      )}
                       {network}
                     </Button>
                   </DropdownMenuTrigger>
@@ -195,8 +204,12 @@ export default function Home() {
         </div>
       </main>
       <footer className="p-4">
-        <div className="container mx-auto text-center text-sm text-green-400">
-          <code>{blockNumber !== null ? blockNumber : '-'}</code>
+        <div className="container mx-auto text-center text-sm">
+          {blockNumber !== null ? (
+            <code className="text-green-400">{blockNumber}</code>
+          ) : (
+            <code>-</code>
+          )}
         </div>
       </footer>
     </div>

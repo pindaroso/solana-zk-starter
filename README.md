@@ -34,6 +34,12 @@ pnpm build
 pnpm validator
 ```
 
+**Stop the light validator**
+
+```bash
+pnpm validator:stop
+```
+
 **Deploy the protocol**
 
 ```bash

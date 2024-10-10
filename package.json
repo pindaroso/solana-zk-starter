@@ -10,6 +10,7 @@
     "test": "pnpm -F=protocol test",
     "dev": "pnpm -F=app dev",
     "validator": "light test-validator",
+    "validator:stop": "light test-validator --stop",
     "deploy:protocol": "pnpm -F=protocol deploy:protocol",
     "sync": "bin/sync.sh",
     "ship": "bin/ship.sh",
