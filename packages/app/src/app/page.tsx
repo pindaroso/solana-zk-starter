@@ -17,14 +17,17 @@ import {
   TooltipTrigger,
 } from '@/components/ui/tooltip'
 import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select'
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuLabel,
+  DropdownMenuRadioGroup,
+  DropdownMenuRadioItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu'
 import { Button } from '@/components/ui/button'
 import { useWalletContext } from '@/components/providers/wallet'
+import { formatAddress } from '@/lib/utils'
 
 export default function Home() {
   const { publicKey, disconnect } = useWallet()
@@ -35,6 +38,7 @@ export default function Home() {
 
   const [blockNumber, setBlockNumber] = useState<number | null>(null)
   const [balance, setBalance] = useState<number | null>(null)
+  const [network, setNetwork] = useState<string>('localnet')
 
   useEffect(() => {
     const conn = new Connection(endpoint, 'confirmed') // Use network state
@@ -64,31 +68,50 @@ export default function Home() {
       <nav className="p-4">
         <div className="flex justify-between items-center">
           <h1 className="text-primary text-lg">Solana ZK Starter</h1>
-          <div className="flex items-center gap-2">
+          <div className="flex items-center">
             {publicKey ? (
               <div className="flex flex-row">
-                <Select
-                  defaultValue="localnet"
-                  onValueChange={(value) => {
-                    const endpoints = {
-                      localnet: 'http://127.0.0.1:8899',
-                      devnet: 'https://api.devnet.solana.com',
-                      testnet: 'https://api.testnet.solana.com',
-                      mainnet: 'https://api.mainnet-beta.solana.com',
-                    }
-                    setEndpoint(endpoints[value as keyof typeof endpoints]) // Update wallet context endpoint
-                  }}
-                >
-                  <SelectTrigger>
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent className="bg-background">
-                    <SelectItem value="localnet">Localnet</SelectItem>
-                    <SelectItem value="devnet">Devnet</SelectItem>
-                    <SelectItem value="testnet">Testnet</SelectItem>
-                    <SelectItem value="mainnet">Mainnet</SelectItem>
-                  </SelectContent>
-                </Select>
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button variant="outline" className="w-24">
+                      <span className="text-green-400 mr-2">&bull;</span>
+                      {network}
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent
+                    defaultValue={network}
+                    className="bg-background w-56"
+                  >
+                    <DropdownMenuLabel>Network</DropdownMenuLabel>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuRadioGroup
+                      value={endpoint}
+                      onValueChange={(value) => {
+                        const endpoints = {
+                          localnet: 'http://127.0.0.1:8899',
+                          devnet: 'https://api.devnet.solana.com',
+                          testnet: 'https://api.testnet.solana.com',
+                          mainnet: 'https://api.mainnet-beta.solana.com',
+                        }
+                        setEndpoint(endpoints[value as keyof typeof endpoints])
+                        setNetwork(value)
+                      }}
+                    >
+                      <DropdownMenuRadioItem value="localnet">
+                        Localnet
+                      </DropdownMenuRadioItem>
+                      <DropdownMenuRadioItem value="devnet">
+                        Devnet
+                      </DropdownMenuRadioItem>
+                      <DropdownMenuRadioItem value="testnet">
+                        Testnet
+                      </DropdownMenuRadioItem>
+                      <DropdownMenuRadioItem disabled value="mainnet">
+                        Mainnet
+                      </DropdownMenuRadioItem>
+                    </DropdownMenuRadioGroup>
+                  </DropdownMenuContent>
+                </DropdownMenu>
                 <TooltipProvider>
                   <Tooltip>
                     <TooltipTrigger asChild>
@@ -100,10 +123,7 @@ export default function Home() {
                           setBalance(null)
                         }}
                       >
-                        <code>
-                          {publicKey.toBase58().slice(0, 4)}...
-                          {publicKey.toBase58().slice(-4)}
-                        </code>
+                        <code>{formatAddress(publicKey.toBase58())}</code>
                       </Button>
                     </TooltipTrigger>
                     <TooltipContent>
@@ -115,6 +135,7 @@ export default function Home() {
             ) : (
               <Button
                 variant="outline"
+                className="mr-2"
                 onClick={(e) => {
                   e.preventDefault()
                   setVisible(true)
@@ -127,7 +148,7 @@ export default function Home() {
               <Tooltip>
                 <TooltipTrigger asChild>
                   <div
-                    className="cursor-pointer ml-2"
+                    className="cursor-pointer"
                     onClick={() => {
                       setTheme(theme === 'dark' ? 'light' : 'dark')
                     }}
@@ -147,22 +168,34 @@ export default function Home() {
           </div>
         </div>
       </nav>
-      <main className="flex-grow mx-auto p-4 gap-2">
-        <div className="flex flex-col">
-          <div className="container">
-            Wallet Balance:{' '}
-            {balance !== null ? balance.toFixed(2) + ' SOL' : '-'}
+      <main className="flex-grow">
+        <div className="flex flex-col max-w-md mx-auto p-4 gap-2">
+          {publicKey ? (
+            <Button variant="ghost">
+              Wallet Balance:{' '}
+              {balance !== null ? balance.toFixed(2) + ' SOL' : '-'}
+            </Button>
+          ) : (
+            <Button
+              variant="outline"
+              onClick={(e) => {
+                e.preventDefault()
+                setVisible(true)
+              }}
+            >
+              Connect Wallet
+            </Button>
+          )}
+          <div className="flex flex-col mt-2">
+            <AirdropButton />
           </div>
-        </div>
-        <div className="flex flex-col mt-2">
-          <AirdropButton />
-        </div>
-        <div className="flex flex-col mt-2">
-          <SendButton />
+          <div className="flex flex-col mt-2">
+            <SendButton />
+          </div>
         </div>
       </main>
       <footer className="p-4">
-        <div className="container mx-auto text-center text-sm text-green-500">
+        <div className="container mx-auto text-center text-sm text-green-400">
           <code>{blockNumber !== null ? blockNumber : '-'}</code>
         </div>
       </footer>

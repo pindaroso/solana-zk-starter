@@ -15,16 +15,19 @@ import {
   VersionedTransaction,
 } from '@solana/web3.js'
 import { WalletNotConnectedError } from '@solana/wallet-adapter-base'
+import { useWalletContext } from '@/components/providers/wallet'
 
 import { Button } from '@/components/ui/button'
 
 export const SendButton: FC = () => {
   const { publicKey, sendTransaction } = useWallet()
 
+  const { endpoint } = useWalletContext()
+
   const onClick = useCallback(async () => {
     if (!publicKey) throw new WalletNotConnectedError()
 
-    const connection = createRpc()
+    const connection = createRpc(endpoint)
 
     /// compress to self
     const compressInstruction = await LightSystemProgram.compress({
@@ -123,7 +126,7 @@ export const SendButton: FC = () => {
     console.log(
       `Sent ${1e7} lamports to ${recipient.toBase58()} ! txId: https://explorer.solana.com/tx/${signatureSend}?cluster=custom`
     )
-  }, [publicKey, sendTransaction])
+  }, [publicKey, sendTransaction, endpoint])
 
   return (
     <Button onClick={onClick} disabled={!publicKey}>
