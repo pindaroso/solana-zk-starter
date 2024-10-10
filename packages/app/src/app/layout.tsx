@@ -22,9 +22,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <ThemeProvider themes={['light', 'dark']} defaultTheme="system">
-          <WalletContextProvider>{children}</WalletContextProvider>
-        </ThemeProvider>
+        <WalletContextProvider>
+          <ThemeProvider themes={['light', 'dark']} defaultTheme="system">
+            {children}
+          </ThemeProvider>
+        </WalletContextProvider>
       </body>
     </html>
   )

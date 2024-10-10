@@ -1,6 +1,13 @@
 'use client'
 
-import React, { FC, ReactNode, useMemo, useContext } from 'react'
+import React, {
+  FC,
+  ReactNode,
+  useMemo,
+  useState,
+  createContext,
+  useContext,
+} from 'react'
 import {
   ConnectionProvider,
   WalletProvider,
@@ -12,12 +19,20 @@ import {
 } from '@solana/wallet-adapter-wallets'
 import { WalletModalProvider } from '@solana/wallet-adapter-react-ui'
 
-import NetworkContext from '@/components/contexts/network'
+const WalletContext = createContext({
+  endpoint: 'http://127.0.0.1:8899',
+  setEndpoint: (endpoint: string) => {},
+})
 
 export const WalletContextProvider: FC<{ children: ReactNode }> = ({
   children,
 }) => {
-  const { endpoint } = useContext(NetworkContext)
+  const [endpoint, setEndpoint] = useState('http://127.0.0.1:8899')
+
+  const value = {
+    endpoint,
+    setEndpoint,
+  }
 
   const wallets = useMemo(
     () => [
@@ -29,10 +44,14 @@ export const WalletContextProvider: FC<{ children: ReactNode }> = ({
   )
 
   return (
-    <ConnectionProvider endpoint={endpoint}>
-      <WalletProvider wallets={wallets} autoConnect>
-        <WalletModalProvider>{children}</WalletModalProvider>
-      </WalletProvider>
-    </ConnectionProvider>
+    <WalletContext.Provider value={value}>
+      <ConnectionProvider endpoint={endpoint}>
+        <WalletProvider wallets={wallets} autoConnect>
+          <WalletModalProvider>{children}</WalletModalProvider>
+        </WalletProvider>
+      </ConnectionProvider>
+    </WalletContext.Provider>
   )
 }
+
+export const useWalletContext = () => useContext(WalletContext)
