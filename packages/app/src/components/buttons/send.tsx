@@ -19,7 +19,7 @@ import { useWalletContext } from '@/components/providers/wallet'
 
 import { Button } from '@/components/ui/button'
 
-export const SendButton: FC = () => {
+export const Send: FC = () => {
   const { publicKey, sendTransaction } = useWallet()
 
   const { endpoint } = useWalletContext()

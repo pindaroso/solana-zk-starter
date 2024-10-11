@@ -9,8 +9,6 @@ import { useTheme } from 'next-themes'
 import { Sun, Moon } from 'lucide-react'
 import toast from 'react-hot-toast'
 
-import { SendButton } from '@/components/send-button'
-import { AirdropButton } from '@/components/airdrop-button'
 import {
   Tooltip,
   TooltipContent,
@@ -28,6 +26,11 @@ import {
 } from '@/components/ui/dropdown-menu'
 import { Button } from '@/components/ui/button'
 import { useWalletContext } from '@/components/providers/wallet'
+import { Increment } from '@/components/buttons/increment'
+import { Airdrop } from '@/components/buttons/airdrop'
+import { Send } from '@/components/buttons/send'
+import CreateButton from '@/components/buttons/create'
+
 import { formatAddress } from '@/lib/utils'
 
 const defaultNetwork =
@@ -89,73 +92,81 @@ export default function Home() {
           <h1 className="text-primary text-lg">Solana ZK Starter</h1>
           <div className="flex items-center">
             {publicKey ? (
-              <div className="flex flex-row">
-                <DropdownMenu>
-                  <DropdownMenuTrigger asChild>
-                    <Button variant="outline" className="w-24">
-                      {networkActive ? (
-                        <span className="text-green-400 mr-2">&bull;</span>
-                      ) : (
-                        <span className="text-red-400 mr-2">&bull;</span>
-                      )}
-                      {network}
-                    </Button>
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent
-                    defaultValue={network}
-                    className="bg-background w-56"
-                  >
-                    <DropdownMenuLabel>Network</DropdownMenuLabel>
-                    <DropdownMenuSeparator />
-                    <DropdownMenuRadioGroup
-                      value={endpoint}
-                      onValueChange={(value) => {
-                        const endpoints = {
-                          localnet: 'http://127.0.0.1:8899',
-                          devnet: 'https://api.devnet.solana.com',
-                          testnet: 'https://api.testnet.solana.com',
-                          mainnet: 'https://api.mainnet-beta.solana.com',
-                        }
-                        setEndpoint(endpoints[value as keyof typeof endpoints])
-                        setNetwork(value)
-                      }}
+              <>
+                <Button variant="ghost" className="mr-2">
+                  {balance !== null ? balance.toFixed(2) + ' SOL' : '-'}
+                </Button>
+                <div className="flex flex-row">
+                  <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                      <Button variant="outline" className="w-24">
+                        {networkActive ? (
+                          <span className="text-green-400 mr-2">&bull;</span>
+                        ) : (
+                          <span className="text-red-400 mr-2">&bull;</span>
+                        )}
+                        {network}
+                      </Button>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent
+                      defaultValue={network}
+                      className="bg-background w-56"
                     >
-                      <DropdownMenuRadioItem value="localnet">
-                        Localnet
-                      </DropdownMenuRadioItem>
-                      <DropdownMenuRadioItem value="devnet">
-                        Devnet
-                      </DropdownMenuRadioItem>
-                      <DropdownMenuRadioItem value="testnet">
-                        Testnet
-                      </DropdownMenuRadioItem>
-                      <DropdownMenuRadioItem disabled value="mainnet">
-                        Mainnet
-                      </DropdownMenuRadioItem>
-                    </DropdownMenuRadioGroup>
-                  </DropdownMenuContent>
-                </DropdownMenu>
-                <TooltipProvider>
-                  <Tooltip>
-                    <TooltipTrigger asChild>
-                      <Button
-                        variant="link"
-                        onClick={(e) => {
-                          e.preventDefault()
-                          disconnect()
-                          setWalletConnected(false)
-                          setBalance(null)
+                      <DropdownMenuLabel>Network</DropdownMenuLabel>
+                      <DropdownMenuSeparator />
+                      <DropdownMenuRadioGroup
+                        value={endpoint}
+                        onValueChange={(value) => {
+                          const endpoints = {
+                            localnet: 'http://127.0.0.1:8899',
+                            devnet: 'https://api.devnet.solana.com',
+                            testnet: 'https://api.testnet.solana.com',
+                            mainnet: 'https://api.mainnet-beta.solana.com',
+                          }
+                          setEndpoint(
+                            endpoints[value as keyof typeof endpoints]
+                          )
+                          setNetwork(value)
                         }}
                       >
-                        <code>{formatAddress(publicKey.toBase58())}</code>
-                      </Button>
-                    </TooltipTrigger>
-                    <TooltipContent>
-                      <p>Disconnect Wallet</p>
-                    </TooltipContent>
-                  </Tooltip>
-                </TooltipProvider>
-              </div>
+                        <DropdownMenuRadioItem value="localnet">
+                          Localnet
+                        </DropdownMenuRadioItem>
+                        <DropdownMenuRadioItem value="devnet">
+                          Devnet
+                        </DropdownMenuRadioItem>
+                        <DropdownMenuRadioItem value="testnet">
+                          Testnet
+                        </DropdownMenuRadioItem>
+                        <DropdownMenuRadioItem disabled value="mainnet">
+                          Mainnet
+                        </DropdownMenuRadioItem>
+                      </DropdownMenuRadioGroup>
+                    </DropdownMenuContent>
+                  </DropdownMenu>
+                  <TooltipProvider>
+                    <Tooltip>
+                      <TooltipTrigger asChild>
+                        <Button
+                          variant="outline"
+                          className="mx-2"
+                          onClick={(e) => {
+                            e.preventDefault()
+                            disconnect()
+                            setWalletConnected(false)
+                            setBalance(null)
+                          }}
+                        >
+                          <code>{formatAddress(publicKey.toBase58())}</code>
+                        </Button>
+                      </TooltipTrigger>
+                      <TooltipContent>
+                        <p>Disconnect Wallet</p>
+                      </TooltipContent>
+                    </Tooltip>
+                  </TooltipProvider>
+                </div>
+              </>
             ) : (
               <Button
                 variant="outline"
@@ -194,27 +205,17 @@ export default function Home() {
       </nav>
       <main className="flex-grow">
         <div className="flex flex-col max-w-md mx-auto p-4 gap-2">
-          {publicKey ? (
-            <Button variant="ghost">
-              Wallet Balance:{' '}
-              {balance !== null ? balance.toFixed(2) + ' SOL' : '-'}
-            </Button>
-          ) : (
-            <Button
-              variant="outline"
-              onClick={(e) => {
-                e.preventDefault()
-                setVisible(true)
-              }}
-            >
-              Connect Wallet
-            </Button>
-          )}
           <div className="flex flex-col mt-2">
-            <AirdropButton />
+            <Airdrop />
           </div>
           <div className="flex flex-col mt-2">
-            <SendButton />
+            <Send />
+          </div>
+          <div className="flex flex-col mt-2">
+            <CreateButton />
+          </div>
+          <div className="flex flex-col mt-2">
+            <Increment />
           </div>
         </div>
       </main>

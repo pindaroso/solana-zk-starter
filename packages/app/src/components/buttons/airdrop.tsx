@@ -7,7 +7,7 @@ import toast from 'react-hot-toast'
 import { useWalletContext } from '@/components/providers/wallet'
 import { Button } from '@/components/ui/button'
 
-export const AirdropButton: FC = () => {
+export const Airdrop: FC = () => {
   const { publicKey } = useWallet()
   const { endpoint } = useWalletContext()
 
