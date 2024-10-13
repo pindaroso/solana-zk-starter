@@ -45,37 +45,21 @@ export const CreateButton: FC = () => {
     try {
       // TODO: Adapt for devnet, testnet and mainnet
       const rpc = createRpc()
-      const { merkleTree, nullifierQueue, addressTree, addressQueue } =
-        defaultTestStateTreeAccounts()
-      //await compress(rpc, wallet, 1e9, publicKey, merkleTree)
 
-      const counterAddress = deriveAddress(Buffer.from('counter'), publicKey)
-      //const createAccountTx = createCompressedAccount(
-      //  publicKey,
-      //  bn(1_000),
-      //  undefined,
-      //  counterAddress
-      //)
-      const proofWithContext = await rpc.getValidityProofAndRpcContext()
       const treeAccounts = defaultTestStateTreeAccounts()
+
+      // TODO: Create compressed counteraccoun?
+
+      // TODO: Add hashes and new addresses
+      const proofWithContext = await rpc.getValidityProofAndRpcContext()
 
       const inputs: Buffer[] = []
       const proof = proofWithContext.value.compressedProof
 
-      //treeAccounts.merkleTree
-      //treeAccounts.nullifierQueue
-
-      //const packed = packCompressedAccounts(
-      //  [treeAccounts.merkleTree, treeAccounts.nullifierQueue],
-      //  [],
-      //  []
-      //)
-
-      // TODO: Create counter account
-
+      // TODO: Use LUT to get indices?
       const merkleContext = {
-        merkleTreePubkeyIndex: 0, // TODO: Merkle tree pubkey index
-        nullifierQueuePubkeyIndex: 0, // TODO: Nullifier queue pubkey index
+        merkleTreePubkeyIndex: 0,
+        nullifierQueuePubkeyIndex: 0,
         leafIndex: 0,
         queueIndex: null,
       }

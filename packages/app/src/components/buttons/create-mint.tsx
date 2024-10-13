@@ -25,7 +25,7 @@ export const CreateMintButton: FC = () => {
       const rpc = createRpc()
       const { mint, transactionSignature } = await createMint(
         rpc,
-        wallet,
+        wallet as unknown as Signer,
         wallet.publicKey,
         9
       )
