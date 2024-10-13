@@ -17,6 +17,7 @@ import toast from 'react-hot-toast'
 import { useWalletContext } from '@/components/providers/wallet'
 import { useProgramContext } from '@/components/providers/program'
 import { Button } from '@/components/ui/button'
+import { BN } from '@coral-xyz/anchor'
 
 export function hashvToBn254FieldSizeBe(bytes: Uint8Array[]): Uint8Array {
   const hasher = keccak_256.create()
@@ -62,7 +63,7 @@ export const CreateButton: FC = () => {
       )
       const address = await deriveAddress(seed, addressTree)
 
-      const selectedAccounts: any[] = [
+      const selectedAccounts = [
         {
           hash: bn(address.toBytes()),
           tree: addressTree,
@@ -70,9 +71,13 @@ export const CreateButton: FC = () => {
         },
       ]
 
-      // TODO: Add hashes and new addresses
+      /*
+       * ERROR: Failed to get ValidityProof for compressed accounts 36439686636752871256271152024530679660001424812964160093210165672697738154: Record Not Found: Leaf nodes not found for hashes. Got 0 hashes. Expected 1.
+       */
       const { compressedProof, rootIndices } = await rpc.getValidityProof(
-        selectedAccounts.map((account: any) => bn(account.hash))
+        selectedAccounts.map(
+          ({ hash }: { hash: BN; tree: PublicKey; queue: PublicKey }) => hash
+        )
       )
 
       // TODO: Add input?
