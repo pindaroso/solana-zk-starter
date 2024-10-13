@@ -29,7 +29,8 @@ import { useWalletContext } from '@/components/providers/wallet'
 import { Increment } from '@/components/buttons/increment'
 import { Airdrop } from '@/components/buttons/airdrop'
 import { Send } from '@/components/buttons/send'
-import CreateButton from '@/components/buttons/create'
+import CreateMintButton from '@/components/buttons/create-mint'
+import CreateCounterButton from '@/components/buttons/create-counter'
 
 import { formatAddress } from '@/lib/utils'
 
@@ -212,7 +213,10 @@ export default function Home() {
             <Send />
           </div>
           <div className="flex flex-col mt-2">
-            <CreateButton />
+            <CreateMintButton />
+          </div>
+          <div className="flex flex-col mt-2">
+            <CreateCounterButton />
           </div>
           <div className="flex flex-col mt-2">
             <Increment />
