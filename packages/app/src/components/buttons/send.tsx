@@ -15,11 +15,12 @@ import {
   VersionedTransaction,
 } from '@solana/web3.js'
 import { WalletNotConnectedError } from '@solana/wallet-adapter-base'
-import { useWalletContext } from '@/components/providers/wallet'
+import toast from 'react-hot-toast'
 
+import { useWalletContext } from '@/components/providers/wallet'
 import { Button } from '@/components/ui/button'
 
-export const Send: FC = () => {
+export const SendButton: FC<{ className?: string }> = ({ className }) => {
   const { publicKey, sendTransaction } = useWallet()
 
   const { endpoint } = useWalletContext()
@@ -123,14 +124,20 @@ export const Send: FC = () => {
       signature: signatureSend,
     })
 
+    toast.success(
+      `Sent ${1e7} lamports to ${recipient.toBase58()} ! txId: https://explorer.solana.com/tx/${signatureSend}?cluster=custom`
+    )
+
     console.log(
       `Sent ${1e7} lamports to ${recipient.toBase58()} ! txId: https://explorer.solana.com/tx/${signatureSend}?cluster=custom`
     )
   }, [publicKey, sendTransaction, endpoint])
 
   return (
-    <Button onClick={onClick} disabled={!publicKey}>
+    <Button onClick={onClick} disabled={!publicKey} className={className}>
       Send Compressed SOL
     </Button>
   )
 }
+
+export default SendButton

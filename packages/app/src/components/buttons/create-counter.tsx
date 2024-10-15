@@ -8,6 +8,8 @@ import {
   noopProgram,
   accountCompressionProgram,
   deriveAddress,
+  CompressedAccountWithMerkleContext,
+  createCompressedAccount,
 } from '@lightprotocol/stateless.js'
 import { keccak_256 } from '@noble/hashes/sha3'
 import { WalletNotConnectedError } from '@solana/wallet-adapter-base'
@@ -42,7 +44,9 @@ export class ProgramNotInitializedError extends Error {
   name = 'ProgramNotInitializedError'
 }
 
-export const CreateButton: FC = () => {
+export const CreateCounterButton: FC<{ className?: string }> = ({
+  className,
+}) => {
   const { endpoint } = useWalletContext()
   const { program } = useProgramContext()
   const wallet = useAnchorWallet()
@@ -55,19 +59,29 @@ export const CreateButton: FC = () => {
       // TODO: Adapt for devnet, testnet and mainnet
       const rpc = createRpc()
 
-      const { addressTree, addressQueue } = defaultTestStateTreeAccounts()
+      const { addressTree, addressQueue, nullifierQueue } =
+        defaultTestStateTreeAccounts()
 
       const seed = deriveAddressSeed(
         [Buffer.from('counter'), wallet.publicKey.toBuffer()],
         program.programId
       )
       const address = await deriveAddress(seed, addressTree)
+      const compressedAccount = createCompressedAccount(
+        wallet.publicKey,
+        bn(10),
+        undefined,
+        [10]
+      )
 
-      const selectedAccounts = [
+      const selectedAccounts: CompressedAccountWithMerkleContext[] = [
         {
-          hash: bn(address.toBytes()),
-          tree: addressTree,
-          queue: addressQueue,
+          ...compressedAccount,
+          readOnly: true,
+          merkleTree: addressTree,
+          nullifierQueue,
+          hash: [bn(address.toBytes()).toNumber()],
+          leafIndex: 0,
         },
       ]
 
@@ -75,9 +89,8 @@ export const CreateButton: FC = () => {
        * ERROR: Failed to get ValidityProof for compressed accounts 36439686636752871256271152024530679660001424812964160093210165672697738154: Record Not Found: Leaf nodes not found for hashes. Got 0 hashes. Expected 1.
        */
       const { compressedProof, rootIndices } = await rpc.getValidityProof(
-        selectedAccounts.map(
-          ({ hash }: { hash: BN; tree: PublicKey; queue: PublicKey }) => hash
-        )
+        selectedAccounts.map(({ hash }) => bn(hash[0])),
+        [bn(address.toBytes())]
       )
 
       // TODO: Add input?
@@ -137,10 +150,10 @@ export const CreateButton: FC = () => {
   }, [wallet, endpoint, program])
 
   return (
-    <Button onClick={onClick} disabled={!wallet}>
+    <Button onClick={onClick} disabled={!wallet} className={className}>
       Create Counter
     </Button>
   )
 }
 
-export default CreateButton
+export default CreateCounterButton

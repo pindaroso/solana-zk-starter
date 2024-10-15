@@ -1,13 +1,14 @@
 import { useWallet } from '@solana/wallet-adapter-react'
 import { FC, useCallback } from 'react'
-import { confirmTx, createRpc } from '@lightprotocol/stateless.js'
 import { WalletNotConnectedError } from '@solana/wallet-adapter-base'
 import toast from 'react-hot-toast'
 
 import { useWalletContext } from '@/components/providers/wallet'
 import { Button } from '@/components/ui/button'
 
-export const AirdropButton: FC<{ className?: string }> = ({ className }) => {
+export const IncrementCounterButton: FC<{ className?: string }> = ({
+  className,
+}) => {
   const { publicKey } = useWallet()
   const { endpoint } = useWalletContext()
 
@@ -15,20 +16,19 @@ export const AirdropButton: FC<{ className?: string }> = ({ className }) => {
     if (!publicKey) throw new WalletNotConnectedError()
 
     try {
-      const conn = createRpc(endpoint)
-      await confirmTx(conn, await conn.requestAirdrop(publicKey, 1e9))
-      toast.success('Airdrop Success')
+      // TODO: Implement
+      toast.error('Not Implemented')
     } catch (error: any) {
       console.error(error)
-      toast.error(`Airdrop Failed: ${error.message}`)
+      toast.error(`Increment Failed: ${error.message}`)
     }
   }, [publicKey, endpoint])
 
   return (
     <Button onClick={onClick} disabled={!publicKey} className={className}>
-      Airdrop SOL
+      Increment Counter
     </Button>
   )
 }
 
-export default AirdropButton
+export default IncrementCounterButton

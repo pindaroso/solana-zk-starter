@@ -26,12 +26,11 @@ import {
 } from '@/components/ui/dropdown-menu'
 import { Button } from '@/components/ui/button'
 import { useWalletContext } from '@/components/providers/wallet'
-import { Increment } from '@/components/buttons/increment'
-import { Airdrop } from '@/components/buttons/airdrop'
-import { Send } from '@/components/buttons/send'
+import AirdropButton from '@/components/buttons/airdrop'
+import SendButton from '@/components/buttons/send'
 import CreateMintButton from '@/components/buttons/create-mint'
 import CreateCounterButton from '@/components/buttons/create-counter'
-
+import IncrementCounterButton from '@/components/buttons/increment-counter'
 import { formatAddress } from '@/lib/utils'
 
 const defaultNetwork =
@@ -49,11 +48,14 @@ export default function Home() {
   const [network, setNetwork] = useState(defaultNetwork)
   const [networkActive, setNetworkActive] = useState(false)
   const [walletConnected, setWalletConnected] = useState(false)
+  const [route, setRoute] = useState<'cost' | 'counter' | 'mint' | 'faucet'>(
+    'cost'
+  )
 
   useEffect(() => {
     if (publicKey && !walletConnected) {
       setWalletConnected(true)
-      toast.success('Wallet connected')
+      toast.success('Wallet Connected')
     }
   }, [publicKey])
 
@@ -90,11 +92,20 @@ export default function Home() {
     <div className="flex flex-col min-h-screen">
       <nav className="p-4">
         <div className="flex justify-between items-center">
-          <h1 className="text-primary text-lg">Solana ZK Starter</h1>
+          <div className="flex items-center gap-6 text-zinc-700 dark:text-zinc-300 cursor-pointer">
+            <h1 className="text-primary text-lg">Solana ZK Starter</h1>
+            <div onClick={() => setRoute('cost')}>Cost Calculator</div>
+            <div onClick={() => setRoute('counter')}>Counter Program</div>
+            <div onClick={() => setRoute('mint')}>Mint</div>
+            <div onClick={() => setRoute('faucet')}>Faucet</div>
+          </div>
           <div className="flex items-center">
             {publicKey ? (
               <>
-                <Button variant="ghost" className="mr-2">
+                <Button
+                  variant="ghost"
+                  className="mr-2 text-zinc-700 dark:text-zinc-300"
+                >
                   {balance !== null ? balance.toFixed(2) + ' SOL' : '-'}
                 </Button>
                 <div className="flex flex-row">
@@ -206,21 +217,24 @@ export default function Home() {
       </nav>
       <main className="flex-grow">
         <div className="flex flex-col max-w-md mx-auto p-4 gap-2">
-          <div className="flex flex-col mt-2">
-            <Airdrop />
-          </div>
-          <div className="flex flex-col mt-2">
-            <Send />
-          </div>
-          <div className="flex flex-col mt-2">
-            <CreateMintButton />
-          </div>
-          <div className="flex flex-col mt-2">
-            <CreateCounterButton />
-          </div>
-          <div className="flex flex-col mt-2">
-            <Increment />
-          </div>
+          {route === 'cost' && (
+            <div className="flex flex-col mt-2 text-center">Coming Soon</div>
+          )}
+          {route === 'faucet' && (
+            <AirdropButton className="flex flex-col mt-2" />
+          )}
+          {route === 'mint' && (
+            <>
+              <SendButton className="flex flex-col mt-2" />
+              <CreateMintButton className="flex flex-col mt-2" />
+            </>
+          )}
+          {route === 'counter' && (
+            <>
+              <CreateCounterButton className="flex flex-col mt-2" />
+              <IncrementCounterButton className="flex flex-col mt-2" />
+            </>
+          )}
         </div>
       </main>
       <footer className="p-4">

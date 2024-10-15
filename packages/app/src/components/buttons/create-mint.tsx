@@ -6,38 +6,34 @@ import { WalletNotConnectedError } from '@solana/wallet-adapter-base'
 import toast from 'react-hot-toast'
 
 import { useWalletContext } from '@/components/providers/wallet'
-import { useProgramContext } from '@/components/providers/program'
 import { Button } from '@/components/ui/button'
 import { Signer } from '@solana/web3.js'
 
-export const CreateMintButton: FC = () => {
-  const { publicKey } = useWallet()
+export const CreateMintButton: FC<{ className?: string }> = ({ className }) => {
   const { endpoint } = useWalletContext()
-  const { program } = useProgramContext()
   const wallet = useAnchorWallet()
 
   const onClick = useCallback(async () => {
-    if (!publicKey) throw new WalletNotConnectedError()
     if (!wallet) throw new WalletNotConnectedError()
 
     try {
-      // TODO: Adapt for devnet, testnet and mainnet
-      const rpc = createRpc()
-      const { mint, transactionSignature } = await createMint(
+      const rpc = createRpc(endpoint)
+      const { transactionSignature } = await createMint(
         rpc,
-        wallet as unknown as Signer,
+        wallet as unknown as Signer, // TODO: Fix this
         wallet.publicKey,
         9
       )
 
       toast.success(`Tx Success: ${transactionSignature}`)
-    } catch (error) {
+    } catch (error: any) {
       console.error(error)
+      toast.error(`Mint Creation Failed: ${error.message}`)
     }
-  }, [publicKey, wallet])
+  }, [wallet, endpoint])
 
   return (
-    <Button onClick={onClick} disabled={!publicKey}>
+    <Button onClick={onClick} disabled={!wallet} className={className}>
       Create Mint
     </Button>
   )
