@@ -115,10 +115,10 @@ export default function Home() {
               Cost Savings Calculator
             </Link>
             <Link
-              className={hash === '#/counter' ? 'text-primary' : ''}
-              href="#/counter"
+              className={hash === '#/program' ? 'text-primary' : ''}
+              href="#/program"
             >
-              Counter Program
+              Program
             </Link>
             <Link
               className={hash === '#/mint' ? 'text-primary' : ''}
@@ -260,7 +260,7 @@ export default function Home() {
               <SendButton className="flex flex-col mt-2" />
             </>
           )}
-          {hash === '#/counter' && (
+          {hash === '#/program' && (
             <>
               <CreateCounterButton className="flex flex-col mt-2" />
               <IncrementCounterButton className="flex flex-col mt-2" />
