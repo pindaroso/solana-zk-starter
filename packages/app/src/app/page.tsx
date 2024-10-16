@@ -40,6 +40,14 @@ import DeleteCounterButton from '@/components/buttons/delete-counter'
 import DecrementCounterButton from '@/components/buttons/decrement-counter'
 import CalculateCostButton from '@/components/buttons/calculate-cost'
 
+declare global {
+  interface window {
+    location: {
+      hash: string
+    }
+  }
+}
+
 const defaultNetwork =
   process.env.NODE_ENV === 'development' ? 'localnet' : 'devnet'
 
@@ -56,7 +64,9 @@ export default function Home() {
   const [network, setNetwork] = useState(defaultNetwork)
   const [networkActive, setNetworkActive] = useState(false)
   const [walletConnected, setWalletConnected] = useState(false)
-  const [hash, setHash] = useState(window.location.hash)
+  const [hash, setHash] = useState(
+    typeof window !== 'undefined' ? window.location.hash : ''
+  )
 
   useEffect(() => {
     if (publicKey && !walletConnected) {
@@ -102,7 +112,7 @@ export default function Home() {
     <div className="flex flex-col min-h-screen">
       <nav className="p-4">
         <div className="flex justify-between items-center">
-          <div className="flex items-center gap-6 text-zinc-700 dark:text-zinc-300 cursor-pointer">
+          <div className="flex items-center gap-6 text-zinc-700 dark:text-zinc-300">
             <Link href="/" className="text-primary text-lg">
               Solana ZK Starter
             </Link>
