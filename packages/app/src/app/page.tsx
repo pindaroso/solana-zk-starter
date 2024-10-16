@@ -9,6 +9,7 @@ import { useTheme } from 'next-themes'
 import { Sun, Moon } from 'lucide-react'
 import toast from 'react-hot-toast'
 import Link from 'next/link'
+import { useParams } from 'next/navigation'
 
 import {
   Tooltip,
@@ -46,6 +47,7 @@ export default function Home() {
   const { publicKey, disconnect } = useWallet()
   const { setVisible } = useWalletModal()
   const { setTheme, theme } = useTheme()
+  const params = useParams()
 
   const { endpoint, setEndpoint } = useWalletContext()
 
@@ -54,6 +56,7 @@ export default function Home() {
   const [network, setNetwork] = useState(defaultNetwork)
   const [networkActive, setNetworkActive] = useState(false)
   const [walletConnected, setWalletConnected] = useState(false)
+  const [hash, setHash] = useState(window.location.hash)
 
   useEffect(() => {
     if (publicKey && !walletConnected) {
@@ -90,6 +93,10 @@ export default function Home() {
       conn.removeSlotChangeListener(subscriptionId)
     }
   }, [publicKey, endpoint]) // Run effect when publicKey or endpoint changes
+
+  useEffect(() => {
+    setHash(window.location.hash)
+  }, [params])
 
   return (
     <div className="flex flex-col min-h-screen">
@@ -222,19 +229,19 @@ export default function Home() {
       </nav>
       <main className="flex-grow">
         <div className="flex flex-col max-w-md mx-auto p-4 gap-2">
-          {window.location.hash === '#/cost' && (
+          {hash === '#/cost' && (
             <CalculateCostButton className="flex flex-col mt-2" />
           )}
-          {window.location.hash === '#/faucet' && (
+          {hash === '#/faucet' && (
             <AirdropButton className="flex flex-col mt-2" />
           )}
-          {window.location.hash === '#/mint' && (
+          {hash === '#/mint' && (
             <>
               <CreateMintButton className="flex flex-col mt-2" />
               <SendButton className="flex flex-col mt-2" />
             </>
           )}
-          {window.location.hash === '#/counter' && (
+          {hash === '#/counter' && (
             <>
               <CreateCounterButton className="flex flex-col mt-2" />
               <IncrementCounterButton className="flex flex-col mt-2" />
@@ -242,7 +249,7 @@ export default function Home() {
               <DeleteCounterButton className="flex flex-col mt-2" />
             </>
           )}
-          {window.location.hash === '' && (
+          {hash === '' && (
             <div className="flex flex-col mt-2">
               <h1 className="text-primary text-xl text-center">
                 Solana ZK Starter
