@@ -6,7 +6,7 @@ import toast from 'react-hot-toast'
 import { useWalletContext } from '@/components/providers/wallet'
 import { Button } from '@/components/ui/button'
 
-export const CalculateCostButton: FC<{ className?: string }> = ({
+export const CalculateCostSavingsButton: FC<{ className?: string }> = ({
   className,
 }) => {
   const { publicKey } = useWallet()
@@ -31,4 +31,4 @@ export const CalculateCostButton: FC<{ className?: string }> = ({
   )
 }
 
-export default CalculateCostButton
+export default CalculateCostSavingsButton

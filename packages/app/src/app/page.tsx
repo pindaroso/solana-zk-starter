@@ -38,7 +38,7 @@ import CreateCounterButton from '@/components/buttons/create-counter'
 import IncrementCounterButton from '@/components/buttons/increment-counter'
 import DeleteCounterButton from '@/components/buttons/delete-counter'
 import DecrementCounterButton from '@/components/buttons/decrement-counter'
-import CalculateCostButton from '@/components/buttons/calculate-cost'
+import CalculateCostSavingsButton from '@/components/buttons/calculate-cost'
 
 declare global {
   interface window {
@@ -117,10 +117,10 @@ export default function Home() {
               Solana ZK Starter
             </Link>
             <Link
-              className={hash === '#/cost' ? 'text-primary' : ''}
-              href="#/cost"
+              className={hash === '#/calculator' ? 'text-primary' : ''}
+              href="#/calculator"
             >
-              Cost Calculator
+              Cost Savings Calculator
             </Link>
             <Link
               className={hash === '#/counter' ? 'text-primary' : ''}
@@ -259,8 +259,8 @@ export default function Home() {
       </nav>
       <main className="flex-grow">
         <div className="flex flex-col max-w-md mx-auto p-4 gap-2">
-          {hash === '#/cost' && (
-            <CalculateCostButton className="flex flex-col mt-2" />
+          {hash === '#/calculator' && (
+            <CalculateCostSavingsButton className="flex flex-col mt-2" />
           )}
           {hash === '#/faucet' && (
             <AirdropButton className="flex flex-col mt-2" />
@@ -280,10 +280,9 @@ export default function Home() {
             </>
           )}
           {hash === '' && (
-            <div className="flex flex-col mt-2">
-              <h1 className="text-primary text-xl text-center">
-                Solana ZK Starter
-              </h1>
+            <div className="flex flex-col mt-2 text-center gap-2">
+              <h1 className="text-primary text-4xl">zkgm</h1>
+              <p>Say hello to your new zk compresison app.</p>
             </div>
           )}
         </div>
