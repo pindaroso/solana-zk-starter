@@ -2,7 +2,11 @@
 
 # Solana ZK Starter 
 
-This project is a starter for building and deploying Solana [ZK](https://www.zkcompression.com/) compression apps using [Light Protocol](https://github.com/Lightprotocol/light-protocol) and [Helius Photon](https://github.com/helius-labs/photon).
+This project is a `create-react-dapp` template for building, testing and deploying Solana [ZK](https://www.zkcompression.com/) compression apps using [Light Protocol](https://github.com/Lightprotocol/light-protocol) and [Helius Photon](https://github.com/helius-labs/photon).
+
+To get started, run `pnpx create-solana-dapp@latest --template pindaroso/solana-zk-starter my-app`.
+
+## Development
 
 **Requirements**
 
