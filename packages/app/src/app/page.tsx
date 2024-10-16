@@ -277,7 +277,7 @@ export default function Home() {
             </>
           )}
           {hash === '' && (
-            <div className="flex flex-col mt-2 text-center gap-2 text-zinc-700 dark:text-zinc-300">
+            <div className="flex flex-col text-center gap-2 text-zinc-700 dark:text-zinc-300">
               <h1 className="text-4xl">zkgm</h1>
               <p>Say hello to your new zk compresison app.</p>
             </div>
