@@ -116,10 +116,30 @@ export default function Home() {
             <Link href="/" className="text-primary text-lg">
               Solana ZK Starter
             </Link>
-            <Link href="#/cost">Cost Calculator</Link>
-            <Link href="#/counter">Counter Program</Link>
-            <Link href="#/mint">Mint</Link>
-            <Link href="#/faucet">Faucet</Link>
+            <Link
+              className={hash === '#/cost' ? 'text-primary' : ''}
+              href="#/cost"
+            >
+              Cost Calculator
+            </Link>
+            <Link
+              className={hash === '#/counter' ? 'text-primary' : ''}
+              href="#/counter"
+            >
+              Counter Program
+            </Link>
+            <Link
+              className={hash === '#/mint' ? 'text-primary' : ''}
+              href="#/mint"
+            >
+              Mint
+            </Link>
+            <Link
+              className={hash === '#/faucet' ? 'text-primary' : ''}
+              href="#/faucet"
+            >
+              Faucet
+            </Link>
           </div>
           <div className="flex items-center">
             {publicKey ? (
