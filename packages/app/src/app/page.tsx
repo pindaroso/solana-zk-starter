@@ -40,14 +40,6 @@ import DeleteCounterButton from '@/components/buttons/delete-counter'
 import DecrementCounterButton from '@/components/buttons/decrement-counter'
 import CalculateCostSavingsButton from '@/components/buttons/calculate-cost'
 
-declare global {
-  interface window {
-    location: {
-      hash: string
-    }
-  }
-}
-
 const defaultNetwork =
   process.env.NODE_ENV === 'development' ? 'Localnet' : 'Devnet'
 
