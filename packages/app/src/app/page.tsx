@@ -8,6 +8,7 @@ import { LAMPORTS_PER_SOL } from '@solana/web3.js'
 import { useTheme } from 'next-themes'
 import { Sun, Moon } from 'lucide-react'
 import toast from 'react-hot-toast'
+import Link from 'next/link'
 
 import {
   Tooltip,
@@ -25,13 +26,18 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 import { Button } from '@/components/ui/button'
+
 import { useWalletContext } from '@/components/providers/wallet'
+import { formatAddress } from '@/lib/utils'
+
 import AirdropButton from '@/components/buttons/airdrop'
 import SendButton from '@/components/buttons/send'
 import CreateMintButton from '@/components/buttons/create-mint'
 import CreateCounterButton from '@/components/buttons/create-counter'
 import IncrementCounterButton from '@/components/buttons/increment-counter'
-import { formatAddress } from '@/lib/utils'
+import DeleteCounterButton from '@/components/buttons/delete-counter'
+import DecrementCounterButton from '@/components/buttons/decrement-counter'
+import CalculateCostButton from '@/components/buttons/calculate-cost'
 
 const defaultNetwork =
   process.env.NODE_ENV === 'development' ? 'localnet' : 'devnet'
@@ -48,9 +54,6 @@ export default function Home() {
   const [network, setNetwork] = useState(defaultNetwork)
   const [networkActive, setNetworkActive] = useState(false)
   const [walletConnected, setWalletConnected] = useState(false)
-  const [route, setRoute] = useState<'cost' | 'counter' | 'mint' | 'faucet'>(
-    'cost'
-  )
 
   useEffect(() => {
     if (publicKey && !walletConnected) {
@@ -93,11 +96,13 @@ export default function Home() {
       <nav className="p-4">
         <div className="flex justify-between items-center">
           <div className="flex items-center gap-6 text-zinc-700 dark:text-zinc-300 cursor-pointer">
-            <h1 className="text-primary text-lg">Solana ZK Starter</h1>
-            <div onClick={() => setRoute('cost')}>Cost Calculator</div>
-            <div onClick={() => setRoute('counter')}>Counter Program</div>
-            <div onClick={() => setRoute('mint')}>Mint</div>
-            <div onClick={() => setRoute('faucet')}>Faucet</div>
+            <Link href="/" className="text-primary text-lg">
+              Solana ZK Starter
+            </Link>
+            <Link href="#/cost">Cost Calculator</Link>
+            <Link href="#/counter">Counter Program</Link>
+            <Link href="#/mint">Mint</Link>
+            <Link href="#/faucet">Faucet</Link>
           </div>
           <div className="flex items-center">
             {publicKey ? (
@@ -217,23 +222,32 @@ export default function Home() {
       </nav>
       <main className="flex-grow">
         <div className="flex flex-col max-w-md mx-auto p-4 gap-2">
-          {route === 'cost' && (
-            <div className="flex flex-col mt-2 text-center">Coming Soon</div>
+          {window.location.hash === '#/cost' && (
+            <CalculateCostButton className="flex flex-col mt-2" />
           )}
-          {route === 'faucet' && (
+          {window.location.hash === '#/faucet' && (
             <AirdropButton className="flex flex-col mt-2" />
           )}
-          {route === 'mint' && (
+          {window.location.hash === '#/mint' && (
             <>
-              <SendButton className="flex flex-col mt-2" />
               <CreateMintButton className="flex flex-col mt-2" />
+              <SendButton className="flex flex-col mt-2" />
             </>
           )}
-          {route === 'counter' && (
+          {window.location.hash === '#/counter' && (
             <>
               <CreateCounterButton className="flex flex-col mt-2" />
               <IncrementCounterButton className="flex flex-col mt-2" />
+              <DecrementCounterButton className="flex flex-col mt-2" />
+              <DeleteCounterButton className="flex flex-col mt-2" />
             </>
+          )}
+          {window.location.hash === '' && (
+            <div className="flex flex-col mt-2">
+              <h1 className="text-primary text-xl text-center">
+                Solana ZK Starter
+              </h1>
+            </div>
           )}
         </div>
       </main>

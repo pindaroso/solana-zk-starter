@@ -30,7 +30,6 @@ export const SendButton: FC<{ className?: string }> = ({ className }) => {
 
     const connection = createRpc(endpoint)
 
-    /// compress to self
     const compressInstruction = await LightSystemProgram.compress({
       payer: publicKey,
       toAddress: publicKey,
@@ -49,7 +48,6 @@ export const SendButton: FC<{ className?: string }> = ({ className }) => {
     } = await connection.getLatestBlockhashAndContext()
 
     const tx = buildTx(compressInstructions, publicKey, blockhashCtx.blockhash)
-
     const signature = await sendTransaction(tx, connection, {
       minContextSlot,
     })
@@ -60,30 +58,25 @@ export const SendButton: FC<{ className?: string }> = ({ className }) => {
       signature,
     })
 
-    console.log(
-      `Compressed ${1e8} lamports! txId: https://explorer.solana.com/tx/${signature}?cluster=custom`
+    toast.success(
+      `Tx Success: https://explorer.solana.com/tx/${signature}?cluster=custom`
     )
 
-    /// Send compressed SOL to a random address
+    // Send compressed SOL to a random address
     const recipient = Keypair.generate().publicKey
 
-    /// 1. We need to fetch our sol balance
     const accounts = await connection.getCompressedAccountsByOwner(publicKey)
-
-    console.log('accounts', accounts.items)
     const [selectedAccounts, _] = selectMinCompressedSolAccountsForTransfer(
       accounts.items,
       1e7
     )
 
-    console.log('selectedAccounts', selectedAccounts)
-
-    /// 2. Retrieve validity proof for our selected balance
+    // Retrieve validity proof for our selected balance
     const { compressedProof, rootIndices } = await connection.getValidityProof(
       selectedAccounts.map((account) => bn(account.hash))
     )
 
-    /// 3. Create and send compressed transfer
+    // Create and send compressed transfer
     const sendInstruction = await LightSystemProgram.transfer({
       payer: publicKey,
       toAddress: recipient,
@@ -114,22 +107,18 @@ export const SendButton: FC<{ className?: string }> = ({ className }) => {
 
     const transactionSend = new VersionedTransaction(messageV0Send)
 
-    const signatureSend = await sendTransaction(transactionSend, connection, {
+    const sendSig = await sendTransaction(transactionSend, connection, {
       minContextSlot: minContextSlotSend,
     })
 
     await connection.confirmTransaction({
       blockhash: blockhashSend,
       lastValidBlockHeight: lastValidBlockHeightSend,
-      signature: signatureSend,
+      signature: sendSig,
     })
 
     toast.success(
-      `Sent ${1e7} lamports to ${recipient.toBase58()} ! txId: https://explorer.solana.com/tx/${signatureSend}?cluster=custom`
-    )
-
-    console.log(
-      `Sent ${1e7} lamports to ${recipient.toBase58()} ! txId: https://explorer.solana.com/tx/${signatureSend}?cluster=custom`
+      `Tx Success: https://explorer.solana.com/tx/${sendSig}?cluster=custom`
     )
   }, [publicKey, sendTransaction, endpoint])
 

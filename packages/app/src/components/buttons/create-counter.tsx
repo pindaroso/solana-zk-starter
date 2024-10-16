@@ -55,98 +55,100 @@ export const CreateCounterButton: FC<{ className?: string }> = ({
     if (!wallet) throw new WalletNotConnectedError()
     if (!program) throw new ProgramNotInitializedError()
 
-    try {
-      // TODO: Adapt for devnet, testnet and mainnet
-      const rpc = createRpc()
+    toast.error('Not Implemented')
 
-      const { addressTree, addressQueue, nullifierQueue } =
-        defaultTestStateTreeAccounts()
+    //try {
+    //  // TODO: Adapt for devnet, testnet and mainnet
+    //  const rpc = createRpc()
 
-      const seed = deriveAddressSeed(
-        [Buffer.from('counter'), wallet.publicKey.toBuffer()],
-        program.programId
-      )
-      const address = await deriveAddress(seed, addressTree)
-      const compressedAccount = createCompressedAccount(
-        wallet.publicKey,
-        bn(10),
-        undefined,
-        [10]
-      )
+    //  const { addressTree, addressQueue, nullifierQueue } =
+    //    defaultTestStateTreeAccounts()
 
-      const selectedAccounts: CompressedAccountWithMerkleContext[] = [
-        {
-          ...compressedAccount,
-          readOnly: true,
-          merkleTree: addressTree,
-          nullifierQueue,
-          hash: [bn(address.toBytes()).toNumber()],
-          leafIndex: 0,
-        },
-      ]
+    //  const seed = deriveAddressSeed(
+    //    [Buffer.from('counter'), wallet.publicKey.toBuffer()],
+    //    program.programId
+    //  )
+    //  const address = await deriveAddress(seed, addressTree)
+    //  const compressedAccount = createCompressedAccount(
+    //    wallet.publicKey,
+    //    bn(10),
+    //    undefined,
+    //    [10]
+    //  )
 
-      /*
-       * ERROR: Failed to get ValidityProof for compressed accounts 36439686636752871256271152024530679660001424812964160093210165672697738154: Record Not Found: Leaf nodes not found for hashes. Got 0 hashes. Expected 1.
-       */
-      const { compressedProof, rootIndices } = await rpc.getValidityProof(
-        selectedAccounts.map(({ hash }) => bn(hash[0])),
-        [bn(address.toBytes())]
-      )
+    //  const selectedAccounts: CompressedAccountWithMerkleContext[] = [
+    //    {
+    //      ...compressedAccount,
+    //      readOnly: true,
+    //      merkleTree: addressTree,
+    //      nullifierQueue,
+    //      hash: [bn(address.toBytes()).toNumber()],
+    //      leafIndex: 0,
+    //    },
+    //  ]
 
-      // TODO: Add input?
-      const inputs: Buffer[] = []
+    //  /*
+    //   * ERROR: Failed to get ValidityProof for compressed accounts 36439686636752871256271152024530679660001424812964160093210165672697738154: Record Not Found: Leaf nodes not found for hashes. Got 0 hashes. Expected 1.
+    //   */
+    //  const { compressedProof, rootIndices } = await rpc.getValidityProof(
+    //    selectedAccounts.map(({ hash }) => bn(hash[0])),
+    //    [bn(address.toBytes())]
+    //  )
 
-      // TODO: Use LUT to get indices?
-      const merkleContext = {
-        merkleTreePubkeyIndex: 0,
-        nullifierQueuePubkeyIndex: 0,
-        leafIndex: 0,
-        queueIndex: null,
-      }
-      const addressMerkleContext = {
-        addressMerkleTreePubkeyIndex: 0,
-        addressQueuePubkeyIndex: 0,
-      }
-      const merkleTreeRootIndex = 0
-      const addressMerkleTreeRootIndex = rootIndices[0]
+    //  // TODO: Add input?
+    //  const inputs: Buffer[] = []
 
-      const [registeredProgramPda] = PublicKey.findProgramAddressSync(
-        [LightSystemProgram.programId.toBuffer()],
-        new PublicKey(accountCompressionProgram)
-      )
+    //  // TODO: Use LUT to get indices?
+    //  const merkleContext = {
+    //    merkleTreePubkeyIndex: 0,
+    //    nullifierQueuePubkeyIndex: 0,
+    //    leafIndex: 0,
+    //    queueIndex: null,
+    //  }
+    //  const addressMerkleContext = {
+    //    addressMerkleTreePubkeyIndex: 0,
+    //    addressQueuePubkeyIndex: 0,
+    //  }
+    //  const merkleTreeRootIndex = 0
+    //  const addressMerkleTreeRootIndex = rootIndices[0]
 
-      const [accountCompressionAuthority] = PublicKey.findProgramAddressSync(
-        [Buffer.from('cpi_authority')],
-        new PublicKey(LightSystemProgram.programId)
-      )
+    //  const [registeredProgramPda] = PublicKey.findProgramAddressSync(
+    //    [LightSystemProgram.programId.toBuffer()],
+    //    new PublicKey(accountCompressionProgram)
+    //  )
 
-      const tx = await program.methods
-        .create(
-          inputs,
-          compressedProof,
-          merkleContext,
-          merkleTreeRootIndex,
-          addressMerkleContext,
-          addressMerkleTreeRootIndex
-        )
-        .accounts({
-          signer: wallet.publicKey,
-          lightSystemProgram: LightSystemProgram.programId,
-          accountCompressionProgram,
-          accountCompressionAuthority,
-          registeredProgramPda,
-          noopProgram,
-          selfProgram: program.programId,
-          cpiSigner: wallet.publicKey,
-          systemProgram: SystemProgram.programId,
-        })
-        .rpc()
+    //  const [accountCompressionAuthority] = PublicKey.findProgramAddressSync(
+    //    [Buffer.from('cpi_authority')],
+    //    new PublicKey(LightSystemProgram.programId)
+    //  )
 
-      toast.success(`Tx Success: ${tx}`)
-    } catch (error: any) {
-      console.error(error)
-      toast.error(`Creation Failed: ${error.message}`)
-    }
+    //  const tx = await program.methods
+    //    .create(
+    //      inputs,
+    //      compressedProof,
+    //      merkleContext,
+    //      merkleTreeRootIndex,
+    //      addressMerkleContext,
+    //      addressMerkleTreeRootIndex
+    //    )
+    //    .accounts({
+    //      signer: wallet.publicKey,
+    //      lightSystemProgram: LightSystemProgram.programId,
+    //      accountCompressionProgram,
+    //      accountCompressionAuthority,
+    //      registeredProgramPda,
+    //      noopProgram,
+    //      selfProgram: program.programId,
+    //      cpiSigner: wallet.publicKey,
+    //      systemProgram: SystemProgram.programId,
+    //    })
+    //    .rpc()
+
+    //  toast.success(`Tx Success: ${tx}`)
+    //} catch (error: any) {
+    //  console.error(error)
+    //  toast.error(`Creation Failed: ${error.message}`)
+    //}
   }, [wallet, endpoint, program])
 
   return (
