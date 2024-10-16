@@ -30,8 +30,13 @@ export const SendButton: FC<{ className?: string }> = ({ className }) => {
 
     const connection = createRpc(endpoint)
 
+    toast.error('Not Implemented')
+    return
+
     const compressInstruction = await LightSystemProgram.compress({
+      // @ts-ignore
       payer: publicKey,
+      // @ts-ignore
       toAddress: publicKey,
       lamports: 1e8,
       outputStateTree: defaultTestStateTreeAccounts().merkleTree,
@@ -47,6 +52,7 @@ export const SendButton: FC<{ className?: string }> = ({ className }) => {
       value: blockhashCtx,
     } = await connection.getLatestBlockhashAndContext()
 
+    // @ts-ignore
     const tx = buildTx(compressInstructions, publicKey, blockhashCtx.blockhash)
     const signature = await sendTransaction(tx, connection, {
       minContextSlot,
@@ -65,6 +71,7 @@ export const SendButton: FC<{ className?: string }> = ({ className }) => {
     // Send compressed SOL to a random address
     const recipient = Keypair.generate().publicKey
 
+    // @ts-ignore
     const accounts = await connection.getCompressedAccountsByOwner(publicKey)
     const [selectedAccounts, _] = selectMinCompressedSolAccountsForTransfer(
       accounts.items,
@@ -78,6 +85,7 @@ export const SendButton: FC<{ className?: string }> = ({ className }) => {
 
     // Create and send compressed transfer
     const sendInstruction = await LightSystemProgram.transfer({
+      // @ts-ignore
       payer: publicKey,
       toAddress: recipient,
       lamports: 1e7,
@@ -100,6 +108,7 @@ export const SendButton: FC<{ className?: string }> = ({ className }) => {
     } = await connection.getLatestBlockhashAndContext()
 
     const messageV0Send = new TransactionMessage({
+      // @ts-ignore
       payerKey: publicKey,
       recentBlockhash: blockhashSend,
       instructions: sendInstructions,

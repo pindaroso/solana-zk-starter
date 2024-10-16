@@ -49,7 +49,7 @@ declare global {
 }
 
 const defaultNetwork =
-  process.env.NODE_ENV === 'development' ? 'localnet' : 'devnet'
+  process.env.NODE_ENV === 'development' ? 'Localnet' : 'Devnet'
 
 export default function Home() {
   const { publicKey, disconnect } = useWallet()
@@ -110,9 +110,9 @@ export default function Home() {
 
   return (
     <div className="flex flex-col min-h-screen">
-      <nav className="p-4">
+      <nav className="p-3 px-4 border-b border-1 border-zinc-200 dark:border-zinc-800">
         <div className="flex justify-between items-center">
-          <div className="flex items-center gap-6 text-zinc-700 dark:text-zinc-300">
+          <div className="flex items-center text-sm gap-6 text-zinc-700 dark:text-zinc-300">
             <Link href="/" className="text-primary text-lg">
               Solana ZK Starter
             </Link>
@@ -144,16 +144,13 @@ export default function Home() {
           <div className="flex items-center">
             {publicKey ? (
               <>
-                <Button
-                  variant="ghost"
-                  className="mr-2 text-zinc-700 dark:text-zinc-300"
-                >
+                <Button variant="ghost" className="mr-2 font-normal">
                   {balance !== null ? balance.toFixed(2) + ' SOL' : '-'}
                 </Button>
                 <div className="flex flex-row">
                   <DropdownMenu>
                     <DropdownMenuTrigger asChild>
-                      <Button variant="outline" className="w-24">
+                      <Button variant="outline" className="w-24 font-normal">
                         {networkActive ? (
                           <span className="text-green-400 mr-2">&bull;</span>
                         ) : (
@@ -164,7 +161,7 @@ export default function Home() {
                     </DropdownMenuTrigger>
                     <DropdownMenuContent
                       defaultValue={network}
-                      className="bg-background w-56"
+                      className="w-56"
                     >
                       <DropdownMenuLabel>Network</DropdownMenuLabel>
                       <DropdownMenuSeparator />
@@ -172,10 +169,10 @@ export default function Home() {
                         value={endpoint}
                         onValueChange={(value) => {
                           const endpoints = {
-                            localnet: 'http://127.0.0.1:8899',
-                            devnet: 'https://api.devnet.solana.com',
-                            testnet: 'https://api.testnet.solana.com',
-                            mainnet: 'https://api.mainnet-beta.solana.com',
+                            Localnet: 'http://127.0.0.1:8899',
+                            Devnet: 'https://api.devnet.solana.com',
+                            Testnet: 'https://api.testnet.solana.com',
+                            Mainnet: 'https://api.mainnet-beta.solana.com',
                           }
                           setEndpoint(
                             endpoints[value as keyof typeof endpoints]
@@ -183,16 +180,16 @@ export default function Home() {
                           setNetwork(value)
                         }}
                       >
-                        <DropdownMenuRadioItem value="localnet">
+                        <DropdownMenuRadioItem value="Localnet">
                           Localnet
                         </DropdownMenuRadioItem>
-                        <DropdownMenuRadioItem value="devnet">
+                        <DropdownMenuRadioItem value="Devnet">
                           Devnet
                         </DropdownMenuRadioItem>
-                        <DropdownMenuRadioItem value="testnet">
+                        <DropdownMenuRadioItem value="Testnet">
                           Testnet
                         </DropdownMenuRadioItem>
-                        <DropdownMenuRadioItem disabled value="mainnet">
+                        <DropdownMenuRadioItem disabled value="Mainnet">
                           Mainnet
                         </DropdownMenuRadioItem>
                       </DropdownMenuRadioGroup>
@@ -280,8 +277,8 @@ export default function Home() {
             </>
           )}
           {hash === '' && (
-            <div className="flex flex-col mt-2 text-center gap-2">
-              <h1 className="text-primary text-4xl">zkgm</h1>
+            <div className="flex flex-col mt-2 text-center gap-2 text-zinc-700 dark:text-zinc-300">
+              <h1 className="text-4xl">zkgm</h1>
               <p>Say hello to your new zk compresison app.</p>
             </div>
           )}

@@ -16,11 +16,16 @@ export const CreateMintButton: FC<{ className?: string }> = ({ className }) => {
   const onClick = useCallback(async () => {
     if (!wallet) throw new WalletNotConnectedError()
 
+    toast.error('Not Implemented')
+    return
+
+    // @ts-ignore
     try {
       const rpc = createRpc(endpoint)
       const { transactionSignature } = await createMint(
         rpc,
         wallet as unknown as Signer, // TODO: Fix this
+        // @ts-ignore
         wallet.publicKey,
         9
       )
